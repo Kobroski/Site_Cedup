@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../imagens e icons/icon.ico">
+    <title>Cedup Guaramirim</title>
+</head>
+
+<body>
+     <!-- menu -->
+    <header>
+        <nav class="nav-bar">
+            <div class="logo">
+                <img src="../imagens e icons/logocedup.png">
+            </div>
+            <div class="nav-list">
+                <ul>
+                    <li class="nav-item"><a href="index.html" class="nav-link">Início</a></li>
+                    <li class="nav-item"><a href="cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="sobre.html" class="nav-link"> Sobre</a></li>
+                </ul>
+            </div>
+            <div class="login-button">
+                <button><a href="https://estudanteonline.sed.sc.gov.br/loginweb.aspx"target="_blank">Entrar</a></button>
+            </div>
+
+            <div class="mobile-menu-icon">
+                <button onclick="menuShow()"><img class="icon" src="assets/img/menu_white_36dp.svg" alt=""></button>
+            </div>
+        </nav>
+        <div class="mobile-menu">
+            <ul>
+                <li class="nav-item"><a href="index.html" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="cursos.html" class="nav-link">Cursos</a></li>
+                <li class="nav-item"><a href="sobre.html" class="nav-link">Sobre</a></li>
+            </ul>
+
+            <div class="login-button">
+                <button><a href="https://estudanteonline.sed.sc.gov.br/loginweb.aspx"target="_blank">Entrar</a></button>
+            </div>
+        </div>
+    </header>
+
+  <!-- cardapio -->
+
+  <section id="cardapio-container">
+    <h1>Cardápio</h1>
+
+    <label for="turma">Selecione a Turma:</label>
+    <select id="turma" onchange="atualizarCardapio()">
+        <option value="ciencia-dados-manha">Ciência de Dados (Manhã)</option>
+        <option value="ciencia-dados-tarde">Ciência de Dados (Tarde)</option>
+        <option value="adm-manha">Administração (Manhã)</option>
+        <option value="adm-noite">Administração (Noite)</option>
+        <option value="ads-noite">Análise e Desenvolvimento de Sistemas (Noite)</option>
+        <option value="logistica-noite">Logística (Noite)</option>
+        <option value="qualidade-noite">Gestão da Qualidade (Noite)</option>
+    </select>
+
+    <div id="cardapio"></div>
+</section>
+
+<script>
+    function atualizarCardapio() {
+        const turmaSelecionada = document.getElementById('turma').value;
+        const cardapioContainer = document.getElementById('cardapio');
+
+        let cardapio;
+        switch (turmaSelecionada) {
+            case 'ciencia-dados-manha':
+                cardapio = getCardapioCienciaDadosManha();
+                break;
+            case 'ciencia-dados-tarde':
+                cardapio = getCardapioCienciaDadosTarde();
+                break;
+            case 'adm-manha':
+                cardapio = getCardapioAdmManha();
+                break;
+            case 'adm-noite':
+                cardapio = getCardapioAdmNoite();
+                break;
+            case 'ads-noite':
+                cardapio = getCardapioAdsNoite();
+                break;
+            case 'logistica-noite':
+                cardapio = getCardapioLogisticaNoite();
+                break;
+            case 'qualidade-noite':
+                cardapio = getCardapioQualidadeNoite();
+                break;
+            default:
+                cardapio = [];
+        }
+
+        cardapioContainer.innerHTML = '';
+        if (cardapio.length > 0) {
+            cardapio.forEach(item => {
+                const cardapioItem = document.createElement('div');
+                cardapioItem.className = 'cardapio-table';
+                cardapioItem.innerHTML = `
+                    <div class="dia-semana">${item.diaSemana}</div>
+                    <div class="refeicao">${item.refeicao}</div>
+                    <div class="prato">${item.prato}</div>
+                `;
+                cardapioContainer.appendChild(cardapioItem);
+            });
+        } else {
+            cardapioContainer.innerHTML = '<p>Cardápio não disponível para a turma selecionada.</p>';
+        }
+    }
+
+    function getCardapioCienciaDadosManha() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Café da Manhã', prato: 'Feijoada' },
+            { diaSemana: 'Terça', refeicao: 'Café da Manhã', prato: 'Macarrão à Bolonhesa' },
+            { diaSemana: 'Quarta', refeicao: 'Café da Manhã', prato: 'Frango Grelhado com Legumes' },
+            { diaSemana: 'Quinta', refeicao: 'Café da Manhã', prato: 'Peixe Assado com Purê de Batatas' },
+            { diaSemana: 'Sexta', refeicao: 'Café da Manhã', prato: 'Salada de Quinoa' }
+        ];
+    }
+
+    function getCardapioCienciaDadosTarde() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Café da Tarde', prato: 'Salada Caesar' },
+            { diaSemana: 'Terça', refeicao: 'Café da Tarde', prato: 'Risoto de Cogumelos' },
+            { diaSemana: 'Quarta', refeicao: 'Café da Tarde', prato: 'Peixe Grelhado com Arroz' },
+            { diaSemana: 'Quinta', refeicao: 'Café da Tarde', prato: 'Sopa de Abóbora' },
+            { diaSemana: 'Sexta', refeicao: 'Café da Tarde', prato: 'Torta de Frango' }
+        ];
+    }
+
+    function getCardapioAdmManha() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Café da Manhã', prato: 'Pão com Queijo' },
+            { diaSemana: 'Terça', refeicao: 'Café da Manhã', prato: 'Vitamina de Frutas' },
+            { diaSemana: 'Quarta', refeicao: 'Café da Manhã', prato: 'Torradas com Geléia' },
+            { diaSemana: 'Quinta', refeicao: 'Café da Manhã', prato: 'Iogurte com Granola' },
+            { diaSemana: 'Sexta', refeicao: 'Café da Manhã', prato: 'Panquecas de Banana' }
+        ];
+    }
+
+    function getCardapioAdmNoite() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Jantar', prato: 'Arroz à Grega com Frango Grelhado' },
+            { diaSemana: 'Terça', refeicao: 'Jantar', prato: 'Estrogonofe de Carne' },
+            { diaSemana: 'Quarta', refeicao: 'Jantar', prato: 'Peixe ao Molho de Limão' },
+            { diaSemana: 'Quinta', refeicao: 'Jantar', prato: 'Macarrão Integral com Legumes' },
+            { diaSemana: 'Sexta', refeicao: 'Jantar', prato: 'Salada Caesar' }
+        ];
+    }
+
+    function getCardapioAdsNoite() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Jantar', prato: 'Spaghetti à Bolonhesa' },
+            { diaSemana: 'Terça', refeicao: 'Jantar', prato: 'Frango Assado com Batatas' },
+            { diaSemana: 'Quarta', refeicao: 'Jantar', prato: 'Peixe Grelhado com Arroz' },
+            { diaSemana: 'Quinta', refeicao: 'Jantar', prato: 'Sopa de Abóbora' },
+            { diaSemana: 'Sexta', refeicao: 'Jantar', prato: 'Salada Grega' }
+        ];
+    }
+
+    function getCardapioLogisticaNoite() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Jantar', prato: 'Risoto de Cogumelos' },
+            { diaSemana: 'Terça', refeicao: 'Jantar', prato: 'Carne de Panela com Purê de Mandioquinha' },
+            { diaSemana: 'Quarta', refeicao: 'Jantar', prato: 'Frango Xadrez com Arroz Integral' },
+            { diaSemana: 'Quinta', refeicao: 'Jantar', prato: 'Peixe Assado com Batatas' },
+            { diaSemana: 'Sexta', refeicao: 'Jantar', prato: 'Salada de Quinoa' }
+        ];
+    }
+
+    function getCardapioQualidadeNoite() {
+        return [
+            { diaSemana: 'Segunda', refeicao: 'Jantar', prato: 'Yakissoba Vegetariano' },
+            { diaSemana: 'Terça', refeicao: 'Jantar', prato: 'Peixe ao Molho de Maracujá' },
+            { diaSemana: 'Quarta', refeicao: 'Jantar', prato: 'Arroz de Carne Seca' },
+            { diaSemana: 'Quinta', refeicao: 'Jantar', prato: 'Macarrão Integral com Legumes' },
+            { diaSemana: 'Sexta', refeicao: 'Jantar', prato: 'Salada de Quinoa' }
+        ];
+    }
+    atualizarCardapio();
+</script>
+
+<!-- rodapé -->
+<main>
+</main>
+<footer>
+    <div id="footer_content">
+        <div id="footer_contacts">
+            <img src="../imagens e icons/logocedup70px.png">
+            <p>O conhecimento transforma!</p>
+
+            <div id="footer_social_media">
+                <a href="https://www.instagram.com/cedupguaramirim" class="footer-link" id="instagram" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="https://www.facebook.com/cedup.guaramirim?locale=pt_BR" class="footer-link" id="facebook" target="_blank">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="https://wa.me/+554799296581" class="footer-link" id="whatsapp" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+                <a href="mailto:cedupguaramirim@sed.sc.gov.br" class="footer-link" id="envelope" target="_blank">
+                    <i class="fa-solid fa-envelope fa-2xl"></i>
+                </a>
+            </div>
+        </div>
+
+        <ul class="footer-list">
+            <li>
+                <h3>Conheça o Cedup</h3>
+            </li>
+            <li>
+                <a href="infra.html" class="footer-link">Infraestrutura</a>
+            </li>
+            <li>
+                <a href="galeria.html" class="footer-link">Galeria de Turmas</a>
+            </li>
+            <li>
+                <a href="eventos.html" class="footer-link">Eventos</a>
+            </li>
+        </ul>
+
+        <ul class="footer-list">
+            <li>
+                <h3>Informações</h3>
+            </li>
+            <li>
+                <a href="matricula.html" class="footer-link">Matrículas</a>
+            </li>
+            <li>
+                <a href="horario.html" class="footer-link">Horário de Aulas</a>
+            </li>
+            <li>
+                <a href="cardapio.html" class="footer-link">Cardápio</a>
+            </li>
+        </ul>
+
+        <ul class="footer-list">
+            <li>
+                <h3>Outros</h3>
+            </li>
+            <li>
+                <a href="trabalhe.html" class="footer-link" >Trabalhe Conosco</a>
+            </li>
+            <li>
+                <a href="fale.html" class="footer-link" >Fale Conosco</a>
+            </li>
+            <li>
+                <a href="destaques.html" class="footer-link" >Destaques</a>
+            </li>
+        </ul>
+
+        <div id="footer_subscribe">
+            <h3>VOCÊ BEM INFORMADO!</h3>
+
+            <p>
+                Digite seu e-mail para ser notificado sobre nossos eventos e noticias.
+            </p>
+
+            <div id="input_group">
+                <input type="email" id="email">
+                <button>
+                    <i class="fa-regular fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer_copyright">
+        &#169
+        2023 CEDUP Guaramirim. Todos os direitos reservados.
+    </div>
+</footer>
+<script src="..assets/js/script.js"></script>
+</body>
+</html>
